@@ -218,7 +218,7 @@ def main():
     while time.time() < t_end:
         data = gnss.get_pos()
         # logger.info(f"Position: {data}")
-        print(data["LatDecimal"])
+        print(data["LatDecimal"], data["LonDecimal"])
         time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
