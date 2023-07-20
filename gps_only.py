@@ -92,17 +92,17 @@ class IOs:
         versionIo = create_string_buffer(32)
         self.libIo.IO_GetVersion.argtypes=[c_char_p]
         self.libIo.IO_GetVersion(versionIo)
-        logging.debug("libIOs version: %s", versionIo.value.decode('utf-8'))
+        # logging.debug("libIOs version: %s", versionIo.value.decode('utf-8'))
 
 
     def set_led1(self):
-        logging.info("Switching LED1 on")
+        # logging.info("Switching LED1 on")
         ledOn = 1
         self.libIo.DIGIO_Set_LED_SW1(ledOn)
 
     def __del__(self):
         self.libIo.IO_Finalize()
-        logging.info("IO object deleted")
+        # logging.info("IO object deleted")
 
 # RTU class
 class RTU:
@@ -113,17 +113,17 @@ class RTU:
         versionRtu = create_string_buffer(32)
         self.libRtu.RTUControl_GetVersion.argtypes=[c_char_p]
         self.libRtu.RTUControl_GetVersion(versionRtu)
-        logging.debug("libRTU version: %s", versionRtu.value.decode('utf-8'))
+        # logging.debug("libRTU version: %s", versionRtu.value.decode('utf-8'))
 
     def get_adtemp(self):
         ad_temp = c_int()
         self.libRtu.RTUGetAD_TEMP.argtypes=[POINTER(c_int)]
         self.libRtu.RTUGetAD_TEMP(byref(ad_temp))
-        logging.info("Temperature: %d C", ad_temp.value)
+        # logging.info("Temperature: %d C", ad_temp.value)
 
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
-        logging.info("RTU object deleted")
+        # logging.info("RTU object deleted")
 
 # GNSS class
 class GNSS:
@@ -164,8 +164,8 @@ class GNSS:
         self.gpsactive = c_int()
         self.libGps.GPS_IsActive.argtypes=[POINTER(c_int)]
         self.libGps.GPS_IsActive(byref(self.gpsactive))
-        logging.debug(f"Is GPS active? {'Yes' if self.gpsactive else 'No'}")
-        logging.info("GPS-> Module initialized & started")
+        # logging.debug(f"Is GPS active? {'Yes' if self.gpsactive else 'No'}")
+        # logging.info("GPS-> Module initialized & started")
 
         self.set_pos()
 
@@ -179,11 +179,13 @@ class GNSS:
         try:
             measRate=int(measRate)
         except ValueError:
-            logging.error("This is not a whole number.")
+            # logging.error("This is not a whole number.")
+            pass
         if measRate != 1 and measRate != 2 and measRate != 4:
-            logging.error(f"The value ({measRate}) is out of range")
+            # logging.error(f"The value ({measRate}) is out of range")
+            pass
             return
-        logging.info(f"Setting Measurement Rate to {measRate} Hz")
+        # logging.info(f"Setting Measurement Rate to {measRate} Hz")
         rate = c_char(measRate)
         self.libGps.GPS_SetMeasurementRate.argtypes=[c_char]
         self.libGps.GPS_SetMeasurementRate(rate)
@@ -199,7 +201,7 @@ class GNSS:
         del self.io
         del self.rtu
 
-        logging.info("GNSS object deleted")
+        # logging.info("GNSS object deleted")
 
 
 def main():
