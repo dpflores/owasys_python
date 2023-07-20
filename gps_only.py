@@ -149,10 +149,13 @@ class GNSS:
         while True:
             ret = self.libGps.GPS_Start()
             ## added
+            # 0: GPS module control, 1: user control.
+
             self.libGps.GPS_Set_Led_Mode(0)
+
             if ret != 0:
                 ret = self.libGps.GPS_Finalize()
-                time.sleep(5)
+                time.sleep(5)   
             else:
                 break
 
@@ -204,7 +207,7 @@ def main():
     # This is just an example, do whatever you do
     t_end = time.time() + 60 * 15
     while time.time() < t_end:
-        logger.info(f"Position: {gnss.get_pos()}")
+        # logger.info(f"Position: {gnss.get_pos()}")
         time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
