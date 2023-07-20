@@ -148,10 +148,12 @@ class GNSS:
         self.libGps.GPS_Start.restype = c_int
         while True:
             ret = self.libGps.GPS_Start()
-            ## added
+            ## ADDED
             # 0: GPS module control, 1: user control.
-
             self.libGps.GPS_Set_Led_Mode(0)
+            
+            # 0: Normal, 1: Fast Acquisition, 2: High Sensitivity (Default value)
+            self.libGps.GPS_SetGpsMode(1)
 
             if ret != 0:
                 ret = self.libGps.GPS_Finalize()
