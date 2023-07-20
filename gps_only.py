@@ -215,7 +215,7 @@ def main():
     t_end = time.time() + 60 * 15
     while time.time() < t_end:
         data = gnss.get_pos()
-        logger.info(f"Position: {data}")
+        # logger.info(f"Position: {data}")
         print(data)
         time.sleep(SLEEP_TIME)
 
