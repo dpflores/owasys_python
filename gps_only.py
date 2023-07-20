@@ -203,6 +203,11 @@ class GNSS:
 
 
 def main():
+
+    # Power State
+    io = IOs
+    io.set_led1()
+
     gnss = GNSS()
     gnss.set_measurement_rate(2)
 
