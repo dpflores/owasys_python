@@ -11,7 +11,7 @@ libRtu.RTUControl_Start()
 
 print("Switching LED1 on")
 ledOn = 1
-libIo.DIGIO_Set_LED_SW3(ledOn)
+libIo.DIGIO_Set_LED_SW1(ledOn)
 
 versionIo = create_string_buffer(32) # create a 32 byte buffer, initialized to NUL bytes
 libIo.IO_GetVersion.argtypes=[c_char_p]
