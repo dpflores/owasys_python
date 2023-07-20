@@ -140,9 +140,6 @@ class GNSS:
     def gps_init(self):
         gpsconf=TGPS_MODULE_CONFIGURATION()
         pgpsconf = pointer(gpsconf)
-        ## added
-        self.libGps.GPS_Set_Led_Mode(0)
-        
         self.libGps.GPS_Initialize.restype = c_int
         ret = self.libGps.GPS_Initialize(pgpsconf)
 
@@ -151,6 +148,8 @@ class GNSS:
         self.libGps.GPS_Start.restype = c_int
         while True:
             ret = self.libGps.GPS_Start()
+            ## added
+            self.libGps.GPS_Set_Led_Mode(0)
             if ret != 0:
                 ret = self.libGps.GPS_Finalize()
                 time.sleep(5)
