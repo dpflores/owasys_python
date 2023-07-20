@@ -144,7 +144,7 @@ class GNSS:
         ret = self.libGps.GPS_Initialize(pgpsconf)
 
         ## added
-        self.libGps.GPS_Set_Led_Mode()
+        self.libGps.GPS_Set_Led_Mode(0)
 
         self.libGps.GPS_Start.restype = c_int
         while True:
