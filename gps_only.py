@@ -205,7 +205,7 @@ class GNSS:
 def main():
 
     # Power State
-    io = IOs
+    io = IOs()
     io.set_led1()
 
     gnss = GNSS()
