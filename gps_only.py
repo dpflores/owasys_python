@@ -209,7 +209,7 @@ def main():
     # This is just an example, do whatever you do
     t_end = time.time() + 60 * 15
     while time.time() < t_end:
-        # logger.info(f"Position: {gnss.get_pos()}")
+        logger.info(f"Position: {gnss.get_pos()}")
         time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
