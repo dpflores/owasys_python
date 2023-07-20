@@ -3,5 +3,5 @@
 Correr 
 
 ```
-python3 file.py
+sudo python3 file.py
 ```

@@ -16,12 +16,12 @@ libIo.DIGIO_Set_LED_SW1(ledOn)
 versionIo = create_string_buffer(32) # create a 32 byte buffer, initialized to NUL bytes
 libIo.IO_GetVersion.argtypes=[c_char_p]
 libIo.IO_GetVersion(versionIo)
-print("libIOs version: " + versionIo.value) 
+print("libIOs version: " + str(versionIo.value)) 
 
 versionRtu = create_string_buffer(32) # create a 32 byte buffer, initialized to NUL bytes
 libRtu.RTUControl_GetVersion.argtypes=[c_char_p]
 libRtu.RTUControl_GetVersion(versionRtu)
-print("libRTU version: " + versionRtu.value)
+print("libRTU version: " + str(versionRtu.value))
 
 ad_temp = c_int()
 libRtu.RTUGetAD_TEMP.argtypes=[POINTER(c_int)]
