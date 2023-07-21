@@ -58,6 +58,27 @@ class TPOSITION_DATA (Structure):
                 ("HorizAccu", c_double),
                 ("VertiAccu", c_double),
                 ("Speed", c_double),
+                ("Course", c_double),
+                ("HDOP", c_double),
+                ("VDOP", c_double),
+                ("TDOP", c_double),
+                ("numSvs", c_ubyte),
+                ("LatDecimal", c_double),
+                ("LonDecimal", c_double)
+               ]
+
+# ADDED
+
+class TGPS_SPEED (Structure):
+    _fields_ = [("PosValid",  c_ubyte),
+                ("OldValue", c_ubyte),
+                ("Latitude", TGPS_COORD),
+                ("Longitude", TGPS_COORD),
+                ("Altitude", c_double),
+                ("NavStatus [3]", c_char * 3),
+                ("HorizAccu", c_double),
+                ("VertiAccu", c_double),
+                ("Speed", c_double),
                 ("Speed", c_double),
                 ("HDOP", c_double),
                 ("VDOP", c_double),
