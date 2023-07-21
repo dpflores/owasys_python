@@ -4,6 +4,8 @@ A skeleton python script which reads GNSS position from libGPS2
 """
 import logging
 
+import json
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(asctime)s %(levelname)s %(name)-10s: [%(lineno)d] %(message)s',
                     level=logging.INFO)
@@ -218,7 +220,7 @@ def main():
     while time.time() < t_end:
         data = gnss.get_pos()
         # logger.info(f"Position: {data}")
-        print(data)
+        print(json.dumps(data))
         time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
