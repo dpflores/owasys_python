@@ -219,6 +219,7 @@ def main():
     t_end = time.time() + 60 * 15
     while True:
         data = gnss.get_pos()
+        del data["NavStatus [3]"]
         # logger.info(f"Position: {data}")
         print(data)
         # print(json.dumps(data_string))
