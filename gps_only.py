@@ -220,7 +220,7 @@ def main():
     while time.time() < t_end:
         data = gnss.get_pos()
         # logger.info(f"Position: {data}")
-        print(json.dumps(data))
+        print(json.dumps(data[:-1]))
         time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
