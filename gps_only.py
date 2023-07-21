@@ -217,7 +217,7 @@ def main():
 
     # This is just an example, do whatever you do
     t_end = time.time() + 60 * 15
-    while time.time() < t_end:
+    while True:
         data = gnss.get_pos()
         # logger.info(f"Position: {data}")
         print(data)
