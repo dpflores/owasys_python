@@ -220,7 +220,7 @@ def main():
     while time.time() < t_end:
         data = gnss.get_pos()
         # logger.info(f"Position: {data}")
-        print(data)
+        print(data["LatDecimal"], ["LonDecimal"])
         # print(json.dumps(data_string))
         time.sleep(SLEEP_TIME)
 
