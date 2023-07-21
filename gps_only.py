@@ -219,9 +219,9 @@ def main():
     t_end = time.time() + 60 * 15
     while time.time() < t_end:
         data = gnss.get_pos()
-        data_decoded = data.decode('utf-8')
+        data_string = str(data)
         # logger.info(f"Position: {data}")
-        print(json.dumps(data_decoded))
+        print(json.dumps(data_string))
         time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
