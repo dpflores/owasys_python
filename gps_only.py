@@ -176,7 +176,7 @@ class GNSS:
             self.libGps.GPS_Set_Led_Mode(0)
             
             # 0: Normal, 1: Fast Acquisition, 2: High Sensitivity (Default value)
-            self.libGps.GPS_SetGpsMode(2)
+            self.libGps.GPS_SetGpsMode(0)
 
             if ret != 0:
                 ret = self.libGps.GPS_Finalize()
