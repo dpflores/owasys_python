@@ -140,11 +140,10 @@ class RTU:
         # logging.info("Temperature: %d C", ad_temp.value)
 
     def get_raw_accel(self):
-        
         ret = self.libRtu.RTU_GetRawAcceleration(self.pacceldata)
         if (ret == 0):
             return getdict(self.acceldata)
-        return getdict(self.acceldata)
+        return ret
 
 
     def __del__(self):
