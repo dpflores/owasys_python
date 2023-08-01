@@ -140,7 +140,7 @@ class RTU:
         
         while True:
             #ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(0),c_ubyte(100),c_ubyte(50),self.pmovehandler)
-            ret = self.libRtu.RTU_CfgMovementSensor(0,100,c_ubyte(50),self.pmovehandler)
+            ret = self.libRtu.RTU_CfgMovementSensor(0,100,50,self.pmovehandler)
             logging.info(ret)
             if ret != 0:
                 break
