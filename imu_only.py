@@ -68,7 +68,7 @@ class TPOSITION_DATA (Structure):
                ]
 
 class MOVE_INT_T (Structure):
-    _fields_ = [("scale", c_char*6),
+    _fields_ = [("scale", c_char*10),
                 ("x_axis", c_double),
                 ("y_axis", c_double),
                 ("z_axis", c_double)
@@ -146,7 +146,7 @@ class RTU:
         
         self.libRtu.RTU_RemoveMovementSensor()
             
-        ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(0), c_ubyte(10), c_ubyte(10), handler_function)
+        ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(2), c_ubyte(10), c_ubyte(10), handler_function)
         
         logging.info(ret)
         
