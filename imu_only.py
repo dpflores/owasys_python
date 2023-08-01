@@ -128,6 +128,8 @@ class RTU:
         self.set_accel()
     
     def set_accel(self):
+        self.libGps.RTU_GetRawAcceleration.restype = c_int
+        self.libGps.GPS_GetAllPositionData.argtypes=[POINTER(MOVE_INT_T)]
         self.acceldata = MOVE_INT_T()
         self.pacceldata= pointer(self.acceldata)
         
@@ -139,7 +141,6 @@ class RTU:
 
     def get_raw_accel(self):
         
-
         ret = self.libRtu.RTU_GetRawAcceleration(self.pacceldata)
         if (ret == 0):
             return getdict(self.acceldata)
