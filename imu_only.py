@@ -131,14 +131,14 @@ class RTU:
     
     def accel_init(self):
 
-        self.libRtu.RTU_CfgMovementSensor.argtypes=[c_char, c_char, c_char, POINTER(MOVE_INT_T)]
+        self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, POINTER(MOVE_INT_T)]
         
         self.movehandler = MOVE_INT_T()
         self.pmovehandler = pointer(self.movehandler)
 
         
         while True:
-            ret = self.libRtu.RTU_CfgMovementSensor(c_char(0),c_char(127),c_char(5),self.pmovehandler)
+            ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(0),c_ubyte(100),c_ubyte(5),self.pmovehandler)
             if ret != 0:
                 # ret = self.libGps.GPS_Finalize()
                 time.sleep(5)   
