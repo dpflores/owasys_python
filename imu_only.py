@@ -132,6 +132,7 @@ class RTU:
     def accel_init(self):
 
         self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, POINTER(MOVE_INT_T)]
+        self.libRtu.RTU_CfgMovementSensor.restype = c_int
         
         self.movehandler = MOVE_INT_T()
         self.pmovehandler = pointer(self.movehandler)
