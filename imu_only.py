@@ -178,7 +178,7 @@ class RTU:
 
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
-        # logging.info("RTU object deleted")
+        logging.info("RTU object deleted")
 
 # GNSS class
 class GNSS:
