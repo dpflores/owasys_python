@@ -136,7 +136,7 @@ class RTU:
         ret = self.libRtu.RTU_GetRawAcceleration(acceldata)
         if (ret == 0):
             return getdict(self.acceldata)
-        return ret
+        return getdict(self.acceldata)
 
 
     def __del__(self):
