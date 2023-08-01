@@ -68,7 +68,7 @@ class TPOSITION_DATA (Structure):
                ]
 
 class MOVE_INT_T (Structure):
-    _fields_ = [("scale", c_char*10),
+    _fields_ = [("scale", c_char*20),
                 ("x_axis", c_double),
                 ("y_axis", c_double),
                 ("z_axis", c_double)
@@ -136,7 +136,7 @@ class RTU:
         self.movehandler = MOVE_INT_T()
         self.pmovehandler = pointer(self.movehandler)
 
-        ret = self.libRtu.RTU_CfgMovementSensor(c_char(1),c_char(127),c_char(5),self.pmovehandler)
+        ret = self.libRtu.RTU_CfgMovementSensor(c_char(0),c_char(127),c_char(5),self.pmovehandler)
         
         self.set_accel()
 
