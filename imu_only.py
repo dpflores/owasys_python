@@ -130,21 +130,21 @@ class RTU:
 
         self.accel_init()
     
-    def move_handler(self):
+    def move_handler(self, param):
         print("handler")
 
     def accel_init(self):
 
-        self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, MoveHandlerType]
+        # self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, MoveHandlerType]
         self.libRtu.RTU_CfgMovementSensor.restype = c_int
         
         self.movehandler = MOVE_INT_T()
         self.pmovehandler = pointer(self.movehandler)
 
-        handler = MoveHandlerType(self.move_handler)
+        handler_function = MoveHandlerType(self.move_handler)
         while True:            
             
-            ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, handler)
+            ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, handler_function)
             logging.info(ret)
             if ret != 0:
                 break
