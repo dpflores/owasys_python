@@ -71,7 +71,7 @@ class MOVE_INT_T (Structure):
     _fields_ = [("scale", c_char*10),
                 ("x_axis", c_double),
                 ("y_axis", c_double),
-                ("z_axis", c_double),
+                ("z_axis", c_double)
                 ]
 
 
@@ -135,7 +135,7 @@ class RTU:
         acceldata = MOVE_INT_T()
         ret = self.libRtu.RTU_GetRawAcceleration(acceldata)
         if (ret == 0):
-            return getdict(self.gpsdata)
+            return getdict(self.acceldata)
         return ret
 
 
