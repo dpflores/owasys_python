@@ -139,6 +139,7 @@ class RTU:
         
         while True:
             ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(0),c_ubyte(100),c_ubyte(5),self.pmovehandler)
+            logging.info(ret)
             if ret != 0:
                 # ret = self.libGps.GPS_Finalize()
                 time.sleep(5)   
