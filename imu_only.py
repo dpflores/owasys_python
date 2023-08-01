@@ -123,10 +123,23 @@ class RTU:
         versionRtu = create_string_buffer(32)
         self.libRtu.RTUControl_GetVersion.argtypes=[c_char_p]
         self.libRtu.RTUControl_GetVersion(versionRtu)
+
         self.acceldata = None
-        # logging.debug("libRTU version: %s", versionRtu.value.decode('utf-8'))
-        self.set_accel()
+
+        self.accel_init()
+       
     
+    def accel_init(self):
+
+        self.libRtu.RTU_CfgMovementSensor.argtypes=[c_char, c_char, c_char, POINTER(MOVE_INT_T)]
+        
+        self.movehandler = MOVE_INT_T()
+        self.pmovehandler = pointer(self.movehandler)
+
+        ret = self.libRtu.RTU_CfgMovementSensor("0","127","5",self.pmovehandler)
+        
+        self.set_accel()
+
     def set_accel(self):
         self.libRtu.RTU_GetRawAcceleration.restype = c_int
         self.libRtu.RTU_GetRawAcceleration.argtypes=[POINTER(MOVE_INT_T)]
