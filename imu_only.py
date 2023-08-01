@@ -74,7 +74,7 @@ class MOVE_INT_T (Structure):
                 ("z_axis", c_double)
                 ]
 
-MoveHandlerType = CFUNCTYPE(None)
+MoveHandlerType = CFUNCTYPE(None, MOVE_INT_T)
 
 
 def getdict(struct):
