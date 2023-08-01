@@ -126,7 +126,7 @@ class RTU:
     def __init__(self):
         self.libRtu=cdll.LoadLibrary("libRTU_Module.so")
         self.libRtu.RTUControl_Initialize()
-        self.libRtu.RTUControl_Start()
+        
         versionRtu = create_string_buffer(32)
         self.libRtu.RTUControl_GetVersion.argtypes=[c_char_p]
         self.libRtu.RTUControl_GetVersion(versionRtu)
@@ -146,6 +146,9 @@ class RTU:
                 
             
         ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(1), c_ubyte(10), c_ubyte(10), handler_function)
+        
+        self.libRtu.RTUControl_Start()
+
         logging.info(ret)
         
         
