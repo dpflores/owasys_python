@@ -144,7 +144,9 @@ class RTU:
                 time.sleep(5)   
             else:
                 break
+        
         self.set_accel()
+        logging.info("Modulo iniciado correctamente")
 
     def set_accel(self):
         self.libRtu.RTU_GetRawAcceleration.restype = c_int
