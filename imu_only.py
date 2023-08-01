@@ -18,7 +18,7 @@ import time
 
 from ctypes import  (CDLL, Union, Structure, POINTER, cast, byref, create_string_buffer, sizeof,
                      c_ubyte, c_short, c_uint, c_ulong, c_int, c_long, c_float,
-                     c_double, c_longlong, c_char, c_byte, c_ushort)
+                     c_double, c_longlong, c_char, c_byte, c_ushort, c_void_p)
 
 SLEEP_TIME = 1
 
@@ -74,7 +74,7 @@ class MOVE_INT_T (Structure):
                 ("z_axis", c_double)
                 ]
 
-MoveHandlerType = CFUNCTYPE(None, MOVE_INT_T)
+MoveHandlerType = CFUNCTYPE(c_void_p, MOVE_INT_T)
 
 
 def getdict(struct):
