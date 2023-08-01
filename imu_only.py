@@ -144,7 +144,7 @@ class RTU:
 
         handler_function = MoveHandlerType(move_handler)
         
-        self.libRtu.RTU_RemoveMovementSensor()
+        # self.libRtu.RTU_RemoveMovementSensor()
             
         ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(1), c_ubyte(10), c_ubyte(10), handler_function)
         
