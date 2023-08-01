@@ -74,7 +74,7 @@ class MOVE_INT_T (Structure):
                 ("z_axis", c_double)
                 ]
 
-MoveHandlerType = CFUNCTYPE(c_void_p, POINTER(MOVE_INT_T))
+MoveHandlerType = CFUNCTYPE(c_void_p, MOVE_INT_T)
 
 
 def getdict(struct):
@@ -144,7 +144,7 @@ class RTU:
         handler_function = MoveHandlerType(self.move_handler)
         while True:            
             
-            ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, handler_function)
+            ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, POINTER(handler_function))
             logging.info(ret)
             if ret != 0:
                 break
