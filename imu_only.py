@@ -123,8 +123,14 @@ class RTU:
         versionRtu = create_string_buffer(32)
         self.libRtu.RTUControl_GetVersion.argtypes=[c_char_p]
         self.libRtu.RTUControl_GetVersion(versionRtu)
+        self.acceldata = None
         # logging.debug("libRTU version: %s", versionRtu.value.decode('utf-8'))
-
+        self.set_accel()
+    
+    def set_accel(self):
+        self.acceldata = MOVE_INT_T()
+        self.pacceldata= pointer(self.acceldata)
+        
     def get_adtemp(self):
         ad_temp = c_int()
         self.libRtu.RTUGetAD_TEMP.argtypes=[POINTER(c_int)]
@@ -132,8 +138,9 @@ class RTU:
         # logging.info("Temperature: %d C", ad_temp.value)
 
     def get_raw_accel(self):
-        acceldata = MOVE_INT_T()
-        ret = self.libRtu.RTU_GetRawAcceleration(acceldata)
+        
+
+        ret = self.libRtu.RTU_GetRawAcceleration(self.pacceldata)
         if (ret == 0):
             return getdict(self.acceldata)
         return getdict(self.acceldata)
