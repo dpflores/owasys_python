@@ -116,6 +116,11 @@ class IOs:
         self.libIo.IO_Finalize()
         # logging.info("IO object deleted")
 
+
+def move_handler(param):
+        print("handler")
+        return 0
+
 # RTU class
 class RTU:
     def __init__(self):
@@ -130,17 +135,14 @@ class RTU:
 
         self.accel_init()
     
-    def move_handler(self, param):
-        print("handler")
-        return 0
-
+    
     def accel_init(self):
 
         # self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, MoveHandlerType]
         self.libRtu.RTU_CfgMovementSensor.restype = c_int
         
 
-        handler_function = MoveHandlerType(self.move_handler)
+        handler_function = MoveHandlerType(move_handler)
         while True:            
             
             ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, handler_function)
