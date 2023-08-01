@@ -68,7 +68,7 @@ class TPOSITION_DATA (Structure):
                ]
 
 class MOVE_INT_T (Structure):
-    _fields_ = [("scale", c_char*5),
+    _fields_ = [("scale", c_char*4),
                 ("x_axis", c_double),
                 ("y_axis", c_double),
                 ("z_axis", c_double)
