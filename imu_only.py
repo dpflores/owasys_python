@@ -68,11 +68,13 @@ class TPOSITION_DATA (Structure):
                ]
 
 class MOVE_INT_T (Structure):
-    _fields_ = [("scale", c_char*10),
+    _fields_ = [("scale", c_char*5),
                 ("x_axis", c_double),
                 ("y_axis", c_double),
                 ("z_axis", c_double)
                 ]
+
+MoveHandlerType = ctypes.CFUNCTYPE(None)
 
 
 def getdict(struct):
@@ -127,8 +129,10 @@ class RTU:
         self.acceldata = None
 
         self.accel_init()
-       
     
+    def move_handler(self):
+        print("handler")
+
     def accel_init(self):
 
         # self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, POINTER(MOVE_INT_T)]
@@ -139,8 +143,10 @@ class RTU:
 
         
         while True:
-            #ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(0),c_ubyte(100),c_ubyte(50),self.pmovehandler)
-            ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, self.pmovehandler)
+            ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(0),c_ubyte(100),c_ubyte(50),MoveHandlerType)
+            
+            handler = MoveHandlerType(self.move_handler)
+            ret = self.libRtu.RTU_CfgMovementSensor(1, 0, 0, handler)
             logging.info(ret)
             if ret != 0:
                 break
