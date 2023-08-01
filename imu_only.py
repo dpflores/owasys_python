@@ -138,21 +138,21 @@ class RTU:
     
     def accel_init(self):
 
-        self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, MoveHandlerType]
-        self.libRtu.RTU_CfgMovementSensor.restype = c_int
+        # self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, MoveHandlerType]
+        # self.libRtu.RTU_CfgMovementSensor.restype = c_int
         
 
-        handler_function = MoveHandlerType(move_handler)
-        while True:            
+        # handler_function = MoveHandlerType(move_handler)
+        # while True:            
             
-            ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(1), c_ubyte(10), c_ubyte(10), handler_function)
-            logging.info(ret)
-            if ret != 0:
-                break
-                # ret = self.libGps.GPS_Finalize()
-                time.sleep(5)   
-            else:
-                break
+        #     ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(1), c_ubyte(10), c_ubyte(10), handler_function)
+        #     logging.info(ret)
+        #     if ret != 0:
+        #         break
+        #         # ret = self.libGps.GPS_Finalize()
+        #         time.sleep(5)   
+        #     else:
+        #         break
         
         self.set_accel()
         logging.info("Modulo iniciado correctamente")
