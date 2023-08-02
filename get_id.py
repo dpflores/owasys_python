@@ -144,7 +144,8 @@ class RTU:
         serialid = c_ubyte()
         self.libRtu.GetSerialNumber.argtypes=[POINTER(c_ubyte)]
         self.libRtu.RTUGetAD_TEMP.restype = c_ubyte
-        self.libRtu.GetSerialNumber(byref(serialid))
+        ret = self.libRtu.GetSerialNumber(byref(serialid))
+        print(ret)
         # logging.info("ID: %d", serialid)
         return serialid.value
 
