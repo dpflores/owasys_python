@@ -147,7 +147,7 @@ class RTU:
         ret = self.libRtu.GetSerialNumber(byref(serialid))
         print(ret)
         # logging.info("ID: %d", serialid)
-        return serialid.value
+        return serialid.size
 
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
