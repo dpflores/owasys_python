@@ -141,8 +141,8 @@ class RTU:
         return ad_temp.value
 
     def get_serialid(self):
-        serialid = c_char()
-        self.libRtu.GetSerialNumber.argtypes=[POINTER(c_char)]
+        serialid = c_ubyte()
+        self.libRtu.GetSerialNumber.argtypes=[POINTER(c_ubyte)]
         ret = self.libRtu.GetSerialNumber(byref(serialid))
         print(ret)
         # logging.info("ID: %d", serialid)
