@@ -144,14 +144,14 @@ class RTU:
 
         handler_function = MoveHandlerType(move_handler)
         
-        self.libRtu.RTU_RemoveMovementSensor()
+        # self.libRtu.RTU_RemoveMovementSensor()
             
-        ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(1), c_ubyte(10), c_ubyte(10), handler_function)
+        # ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(1), c_ubyte(10), c_ubyte(10), handler_function)
         
-        logging.info(ret)
+        # logging.info(ret)
         
         
-        # self.set_accel()
+        self.set_accel()
         logging.info("Modulo iniciado correctamente")
 
     def set_accel(self):
