@@ -20,7 +20,7 @@ from ctypes import  (CDLL, Union, Structure, POINTER, cast, byref, create_string
                      c_ubyte, c_short, c_uint, c_ulong, c_int, c_long, c_float,
                      c_double, c_longlong, c_char, c_byte, c_ushort, c_void_p)
 
-SLEEP_TIME = 0.1
+SLEEP_TIME = 0.02
 
 class TGPS_MODULE_CONFIGURATION (Structure):
     _fields_ = [("DeviceReceiverName",  c_char * 20),
