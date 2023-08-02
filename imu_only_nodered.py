@@ -148,11 +148,11 @@ class RTU:
             
         ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(2), c_ubyte(10), c_ubyte(10), handler_function)
         
-        logging.info(ret)
+        # logging.info(ret)
         
         
         self.set_accel()
-        logging.info("Modulo iniciado correctamente")
+        # logging.info("Modulo iniciado correctamente")
 
     def set_accel(self):
         # self.libRtu.RTU_GetRawAcceleration.restype = c_int
@@ -179,7 +179,7 @@ class RTU:
 
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
-        logging.info("RTU object deleted")
+        # logging.info("RTU object deleted")
 
 # GNSS class
 class GNSS:
