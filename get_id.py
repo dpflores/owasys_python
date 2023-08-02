@@ -136,8 +136,9 @@ class RTU:
         ad_temp = c_int()
         self.libRtu.RTUGetAD_TEMP.argtypes=[POINTER(c_int)]
         self.libRtu.RTUGetAD_TEMP(byref(ad_temp))
-        return ad_temp.value
         # logging.info("Temperature: %d C", ad_temp.value)
+
+        return ad_temp.value
 
     def get_serialid(self):
         serialid = c_ubyte()
@@ -145,11 +146,12 @@ class RTU:
         self.libRtu.RTUGetAD_TEMP.restype = c_ubyte
         self.libRtu.GetSerialNumber(byref(serialid))
         # logging.info("ID: %d", serialid)
-        return serialid.raw
-        
+        return serialid.value
+
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
         # logging.info("RTU object deleted")
+
 
 # GNSS class
 class GNSS:
