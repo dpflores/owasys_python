@@ -273,7 +273,7 @@ def main():
         # data = rtu.get_raw_accel()
         data = rtu.get_move_sensor()
         del data["scale"]
-        print(data,end="")
+        print(data)
         # print(json.dumps(data_string))
         time.sleep(SLEEP_TIME)
 
