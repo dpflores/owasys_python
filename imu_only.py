@@ -155,8 +155,8 @@ class RTU:
         logging.info("Modulo iniciado correctamente")
 
     def set_accel(self):
-        self.libRtu.RTU_GetRawAcceleration.restype = c_int
-        self.libRtu.RTU_GetRawAcceleration.argtypes=[POINTER(MOVE_INT_T)]
+        # self.libRtu.RTU_GetRawAcceleration.restype = c_int
+        # self.libRtu.RTU_GetRawAcceleration.argtypes=[POINTER(MOVE_INT_T)]
         self.acceldata = MOVE_INT_T()
         self.pacceldata= pointer(self.acceldata)
         
@@ -167,11 +167,15 @@ class RTU:
         # logging.info("Temperature: %d C", ad_temp.value)
 
     def get_raw_accel(self):
+        ret = self.libRtu.RTU_GetRawAcceleration(self.pacceldata)
+        if (ret == 0):
+            return getdict(self.acceldata)
+        return ret
+    def get_move_sensor(self):
         ret = self.libRtu.RTU_GetMovementSensor(self.pacceldata)
         if (ret == 0):
             return getdict(self.acceldata)
         return ret
-
 
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
@@ -202,7 +206,8 @@ class GNSS:
             ret = self.libGps.GPS_Start()
             ## ADDED
             # 0: GPS module control, 1: user control.
-            self.libGps.GPS_Set_Led_Mode(0)
+            setu.RTU_GetRawAcceleration.restype = c_int
+        # self.libRtu.RTU_GetRawAcceleration.argtylf.libGps.GPS_Set_Led_Mode(0)
             
             # 0: Normal, 1: Fast Acquisition, 2: High Sensitivity (Default value)
             self.libGps.GPS_SetGpsMode(0)
@@ -266,6 +271,7 @@ def main():
     t_end = time.time() + 60 * 15
     while True:
         data = rtu.get_raw_accel()
+        # data = rtu.get_move_sensor()
         # logger.info(f"Position: {data}")
         print(data)
         # print(json.dumps(data_string))
