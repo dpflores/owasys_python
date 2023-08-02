@@ -272,6 +272,7 @@ def main():
     while True:
         # data = rtu.get_raw_accel()
         data = rtu.get_move_sensor()
+        print(data)
         del data["scale"]
         print(data)
         # print(json.dumps(data_string))
