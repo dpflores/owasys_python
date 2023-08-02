@@ -136,12 +136,14 @@ class RTU:
         ad_temp = c_int()
         self.libRtu.RTUGetAD_TEMP.argtypes=[POINTER(c_int)]
         self.libRtu.RTUGetAD_TEMP(byref(ad_temp))
+        return ad_temp.value
         # logging.info("Temperature: %d C", ad_temp.value)
 
     def get_serialid(self):
         serialid = c_ubyte()
         self.libRtu.GetSerialNumber.argtypes=[POINTER(c_ubyte)]
         self.libRtu.RTUGetAD_TEMP(byref(serialid))
+        return serialid.value
 
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
