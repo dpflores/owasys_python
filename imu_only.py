@@ -270,8 +270,8 @@ def main():
     # This is just an example, do whatever you do
     t_end = time.time() + 60 * 15
     while True:
-        data = rtu.get_raw_accel()
-        # data = rtu.get_move_sensor()
+        # data = rtu.get_raw_accel()
+        data = rtu.get_move_sensor()
         # logger.info(f"Position: {data}")
         print(data)
         # print(json.dumps(data_string))
