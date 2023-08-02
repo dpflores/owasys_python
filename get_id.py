@@ -145,8 +145,8 @@ class RTU:
         self.libRtu.RTUGetAD_TEMP.restype = c_ubyte
         self.libRtu.GetSerialNumber(byref(serialid))
         # logging.info("ID: %d", serialid)
-
-        return serialid
+        return serialid.raw
+        
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
         # logging.info("RTU object deleted")
