@@ -155,8 +155,8 @@ class RTU:
         logging.info("Modulo iniciado correctamente")
 
     def set_accel(self):
-        # self.libRtu.RTU_GetRawAcceleration.restype = c_int
-        # self.libRtu.RTU_GetRawAcceleration.argtypes=[POINTER(MOVE_INT_T)]
+        self.libRtu.RTU_GetRawAcceleration.restype = c_int
+        self.libRtu.RTU_GetRawAcceleration.argtypes=[POINTER(MOVE_INT_T)]
         self.acceldata = MOVE_INT_T()
         self.pacceldata= pointer(self.acceldata)
         
