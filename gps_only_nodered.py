@@ -242,7 +242,7 @@ def main():
         data = gnss.get_pos()
         del data["NavStatus [3]"]
         # logger.info(f"Position: {data}")
-        print(data)
+        print(data,end="")
         # print(json.dumps(data_string))
         time.sleep(SLEEP_TIME)
 
