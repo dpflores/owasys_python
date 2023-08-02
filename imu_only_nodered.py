@@ -18,9 +18,9 @@ import time
 
 from ctypes import  (CDLL, Union, Structure, POINTER, cast, byref, create_string_buffer, sizeof,
                      c_ubyte, c_short, c_uint, c_ulong, c_int, c_long, c_float,
-                     c_double, c_longlong, c_char, c_byte, c_ushort)
+                     c_double, c_longlong, c_char, c_byte, c_ushort, c_void_p)
 
-SLEEP_TIME = 1
+SLEEP_TIME = 0.1
 
 class TGPS_MODULE_CONFIGURATION (Structure):
     _fields_ = [("DeviceReceiverName",  c_char * 20),
@@ -67,26 +67,15 @@ class TPOSITION_DATA (Structure):
                 ("LonDecimal", c_double)
                ]
 
-# ADDED
+class MOVE_INT_T (Structure):
+    _fields_ = [("scale", c_char*6),
+                ("x_axis", c_double),
+                ("y_axis", c_double),
+                ("z_axis", c_double)
+                ]
 
-class TGPS_SPEED (Structure):
-    _fields_ = [("PosValid",  c_ubyte),
-                ("OldValue", c_ubyte),
-                ("Latitude", TGPS_COORD),
-                ("Longitude", TGPS_COORD),
-                ("Altitude", c_double),
-                ("NavStatus [3]", c_char * 3),
-                ("HorizAccu", c_double),
-                ("VertiAccu", c_double),
-                ("Speed", c_double),
-                ("Speed", c_double),
-                ("HDOP", c_double),
-                ("VDOP", c_double),
-                ("TDOP", c_double),
-                ("numSvs", c_ubyte),
-                ("LatDecimal", c_double),
-                ("LonDecimal", c_double)
-               ]
+MoveHandlerType = CFUNCTYPE(c_void_p, MOVE_INT_T)
+
 
 def getdict(struct):
     result = {}
@@ -127,6 +116,11 @@ class IOs:
         self.libIo.IO_Finalize()
         # logging.info("IO object deleted")
 
+
+def move_handler(param):
+        print("handler",param.x_axis)
+        return 0
+
 # RTU class
 class RTU:
     def __init__(self):
@@ -136,17 +130,56 @@ class RTU:
         versionRtu = create_string_buffer(32)
         self.libRtu.RTUControl_GetVersion.argtypes=[c_char_p]
         self.libRtu.RTUControl_GetVersion(versionRtu)
-        # logging.debug("libRTU version: %s", versionRtu.value.decode('utf-8'))
 
+        self.acceldata = None
+
+        self.accel_init()
+    
+    
+    def accel_init(self):
+
+        self.libRtu.RTU_CfgMovementSensor.argtypes=[c_ubyte, c_ubyte, c_ubyte, MoveHandlerType]
+        self.libRtu.RTU_CfgMovementSensor.restype = c_int
+        
+
+        handler_function = MoveHandlerType(move_handler)
+        
+        self.libRtu.RTU_RemoveMovementSensor()
+            
+        ret = self.libRtu.RTU_CfgMovementSensor(c_ubyte(2), c_ubyte(10), c_ubyte(10), handler_function)
+        
+        logging.info(ret)
+        
+        
+        self.set_accel()
+        logging.info("Modulo iniciado correctamente")
+
+    def set_accel(self):
+        # self.libRtu.RTU_GetRawAcceleration.restype = c_int
+        # self.libRtu.RTU_GetRawAcceleration.argtypes=[POINTER(MOVE_INT_T)]
+        self.acceldata = MOVE_INT_T()
+        self.pacceldata= pointer(self.acceldata)
+        
     def get_adtemp(self):
         ad_temp = c_int()
         self.libRtu.RTUGetAD_TEMP.argtypes=[POINTER(c_int)]
         self.libRtu.RTUGetAD_TEMP(byref(ad_temp))
         # logging.info("Temperature: %d C", ad_temp.value)
 
+    def get_raw_accel(self):
+        ret = self.libRtu.RTU_GetRawAcceleration(self.pacceldata)
+        if (ret == 0):
+            return getdict(self.acceldata)
+        return ret
+    def get_move_sensor(self):
+        ret = self.libRtu.RTU_GetMovementSensor(self.pacceldata)
+        if (ret == 0):
+            return getdict(self.acceldata)
+        return ret
+
     def __del__(self):
         self.libRtu.RTUControl_Finalize()
-        # logging.info("RTU object deleted")
+        logging.info("RTU object deleted")
 
 # GNSS class
 class GNSS:
@@ -173,7 +206,8 @@ class GNSS:
             ret = self.libGps.GPS_Start()
             ## ADDED
             # 0: GPS module control, 1: user control.
-            self.libGps.GPS_Set_Led_Mode(0)
+            setu.RTU_GetRawAcceleration.restype = c_int
+        # self.libRtu.RTU_GetRawAcceleration.argtylf.libGps.GPS_Set_Led_Mode(0)
             
             # 0: Normal, 1: Fast Acquisition, 2: High Sensitivity (Default value)
             self.libGps.GPS_SetGpsMode(0)
@@ -230,18 +264,16 @@ class GNSS:
 def main():
 
     # Power State
-    io = IOs()
-    io.set_led1()
 
-    gnss = GNSS()
-    gnss.set_measurement_rate(2)
+    rtu = RTU()
 
     # This is just an example, do whatever you do
     t_end = time.time() + 60 * 15
     while True:
-        data = gnss.get_pos()
-        # logger.info(f"Position: {data}")
-        print(data)
+        # data = rtu.get_raw_accel()
+        data = rtu.get_move_sensor()
+        del data["scale"]
+        print(data,end="")
         # print(json.dumps(data_string))
         time.sleep(SLEEP_TIME)
 
