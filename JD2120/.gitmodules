@@ -1,0 +1,3 @@
+[submodule "axotec"]
+	path = axotec
+	url = https://github.com/dpflores/axotec
